@@ -44,6 +44,7 @@
 		91D5936F1E9A7A1E0094160B /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D5936E1E9A7A1E0094160B /* ChatManager.swift */; };
 		91D593711E9A8F940094160B /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D593701E9A8F940094160B /* AWSDynamoDB.framework */; };
 		91D593721E9A8F940094160B /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 91D593701E9A8F940094160B /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		91D593741E9BE7A30094160B /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D593731E9BE7A30094160B /* AddFriendViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -100,6 +101,7 @@
 		91D5936C1E9A75960094160B /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		91D5936E1E9A7A1E0094160B /* ChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		91D593701E9A8F940094160B /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSDynamoDB.framework; path = Carthage/Build/iOS/AWSDynamoDB.framework; sourceTree = "<group>"; };
+		91D593731E9BE7A30094160B /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 				9122B0431E6E98470024AE10 /* SignupViewController.swift */,
 				9122B0451E6E986C0024AE10 /* HomeViewController.swift */,
 				91D5936C1E9A75960094160B /* FriendTableViewCell.swift */,
+				91D593731E9BE7A30094160B /* AddFriendViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				91D593651E9A6B8B0094160B /* Friend.swift in Sources */,
 				91D5936B1E9A6BCB0094160B /* Message.swift in Sources */,
 				91D5936F1E9A7A1E0094160B /* ChatManager.swift in Sources */,
+				91D593741E9BE7A30094160B /* AddFriendViewController.swift in Sources */,
 				9122B0761E7842510024AE10 /* CognitoUserPoolController.swift in Sources */,
 				9122B0461E6E986C0024AE10 /* HomeViewController.swift in Sources */,
 			);

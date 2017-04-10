@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleSignIn
+import AWSCognitoIdentityProvider
 
 class LoginViewController: UIViewController {
 
@@ -57,7 +58,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            self.displaySuccessMessage()
+            self.getFederatedIdentity(userpoolController.currentUser!)
         }
     }
     
@@ -131,6 +132,76 @@ extension LoginViewController {
         DispatchQueue.main.async {
             self.present(alertController, animated: true, completion:  nil)
         }
+    }
+
+    fileprivate func getFederatedIdentity(_ user:AWSCognitoIdentityUser) {
+        
+        
+        let userpoolController = CognitoUserPoolController.sharedInstance
+        userpoolController.getUserDetails(user: userpoolController.currentUser!) { (error: Error?, details:AWSCognitoIdentityUserGetDetailsResponse?) in
+            
+            if let error = error {
+                self.displayLoginError(error: error as NSError)
+                return
+            }
+            
+            var email:String? = nil
+            if let userAttributes = details?.userAttributes {
+                for attribute in userAttributes {
+                    if attribute.name?.compare("email") == .orderedSame {
+                        email = attribute.value
+                    }
+                }
+            }
+            
+            guard let emailAddress = email else {
+                let error = NSError(domain: "com.asmtechnology.awschat",
+                                    code: 100,
+                                    userInfo: ["__type":"Cognito error", "message":"Missing email address."])
+                self.displayLoginError(error: error)
+                return
+            }
+            
+            let name = self.usernameField.text!
+            let password = self.passwordField.text!
+            
+            let task = user.getSession(name, password: password, validationData:nil)
+            
+            task.continueWith(block: { (task: AWSTask<AWSCognitoIdentityUserSession>) -> Any? in
+                
+                if let error = task.error {
+                    self.displayLoginError(error: error as NSError)
+                    return nil
+                }
+                
+                let userSession = task.result!
+                let idToken = userSession.idToken!
+                
+                let userpoolController = CognitoUserPoolController.sharedInstance
+                let indentityPoolController = CognitoIdentityPoolController.sharedInstance
+                indentityPoolController.getFederatedIdentityForAmazon(idToken: idToken.tokenString,
+                                                                      username: name,
+                                                                      emailAddress: emailAddress,
+                                                                      userPoolRegion: userpoolController.userPoolRegionString,
+                                                                      userPoolID: userpoolController.userPoolD,
+                                                                      completion: { (error: Error?) in
+                                                                        
+                                                                        if let error = error {
+                                                                            self.displayLoginError(error: error as NSError)
+                                                                            return
+                                                                        }
+                                                                        
+                                                                        self.displaySuccessMessage()
+                                                                        return
+                })
+                
+                
+                return nil
+                
+            })
+
+        }
+        
     }
 
 }
